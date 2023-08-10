@@ -1,5 +1,6 @@
 package com.lembretes.Repository;
 
+import com.lembretes.DTO.PessoasDTO;
 import com.lembretes.Entity.Pessoas;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +14,7 @@ public interface PessoaRepository  extends JpaRepository<Pessoas, Long> {
 
 
     @Query("from Pessoas where nome Like :nome")
-    public List<Pessoas> findByNome(@Param("nome")final String nome);
+    public Pessoas findByNome(@Param("nome")final String nome);
+
 
 }

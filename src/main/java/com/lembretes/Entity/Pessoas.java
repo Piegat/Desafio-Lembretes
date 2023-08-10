@@ -14,7 +14,7 @@ public class Pessoas {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "nome", nullable = false)
+    @Column(name = "nome", nullable = false, unique = true)
     private String nome;
 
 }

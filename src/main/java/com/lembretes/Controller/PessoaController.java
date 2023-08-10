@@ -1,5 +1,6 @@
 package com.lembretes.Controller;
 
+import com.lembretes.DTO.PessoasDTO;
 import com.lembretes.Entity.Pessoas;
 import com.lembretes.Repository.PessoaRepository;
 import com.lembretes.Service.PessoaService;
@@ -22,20 +23,25 @@ public class PessoaController {
     private PessoaService pessoaService;
 
     @GetMapping("/all")
-    private List<Pessoas> findByAll(){
-        return this.pessoaRepository.findAll();
+    private List<PessoasDTO> findByAll(){
+        return this.pessoaService.findAll();
+    }
+
+    @GetMapping("/id")
+    private PessoasDTO findById(@RequestParam("id") Long id){
+        return this.pessoaService.findById(id);
     }
 
     @GetMapping("/nome")
-    private List<Pessoas> findByNome(@RequestParam("nome") String nome){
-        return this.pessoaRepository.findByNome(nome);
+    private PessoasDTO findByNome(@RequestParam("nome") String nome){
+        return this.pessoaService.findNome(nome);
     }
 
 
     @PostMapping
-    private ResponseEntity<String> cadastrar(@RequestBody Pessoas pessoas){
+    private ResponseEntity<String> cadastrar(@RequestBody PessoasDTO pessoasDTO){
         try {
-            this.pessoaService.cadastrar(pessoas);
+            this.pessoaService.cadastrar(pessoasDTO);
             return ResponseEntity.ok("Pessoa cadastrada com sucesso");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -43,9 +49,9 @@ public class PessoaController {
     }
 
     @PutMapping
-    private ResponseEntity<String> editar(@RequestParam("id") final Long id, @RequestBody final Pessoas pessoa){
+    private ResponseEntity<String> editar(@RequestParam("id") final Long id, @RequestBody final PessoasDTO pessoasDTO){
         try {
-            this.pessoaService.editar(id, pessoa);
+            this.pessoaService.editar(id, pessoasDTO);
 
             return ResponseEntity.ok().body("Editado com sucesso!");
         }catch (Exception e){
