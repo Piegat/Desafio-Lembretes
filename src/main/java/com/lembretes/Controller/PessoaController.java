@@ -60,7 +60,7 @@ public class PessoaController {
     }
 
     @DeleteMapping
-    private ResponseEntity<String> deletar(@RequestParam("id") final Long id){
+    public ResponseEntity<String> deletar(@RequestParam("id") final Long id){
         try{
             this.pessoaService.deletar(id);
 

@@ -2,6 +2,7 @@ package com.lembretes;
 
 import com.lembretes.Controller.LembretesController;
 import com.lembretes.Controller.PessoaController;
+import com.lembretes.DTO.LembretesDTO;
 import com.lembretes.DTO.PessoasDTO;
 import com.lembretes.Entity.Lembretes;
 import com.lembretes.Entity.Pessoas;
@@ -14,6 +15,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,16 @@ public class PessoaTest {
         Pessoas pessoasEntity = new Pessoas((long) 3, "Gustavo");
 
         Mockito.when(repository.save(pessoasEntity)).thenReturn(pessoasEntity);
+
+        PessoasDTO pessoasDTO =  new PessoasDTO((long) 1, "Gustavo");
+
+        ResponseEntity<String> responseEntity = ResponseEntity.ok("Pessoa cadastrada com sucesso");
+        Mockito.when(controller.cadastrar(pessoasDTO)).thenReturn(responseEntity);
+
+        ResponseEntity<String> responseEntity2 = ResponseEntity.ok("Editado com sucesso!");
+        Mockito.when(controller.editar(1L, pessoasDTO)).thenReturn(responseEntity2);
+
+
     }
 
 
@@ -82,6 +95,30 @@ public class PessoaTest {
             Assertions.assertEquals(pessoas.get(i).getNome(), pessoasDTOController.get(i).getNome());
         }
     }
+
+    @Test
+    void TestPostPessoa(){
+        PessoasDTO pessoasDTO = new PessoasDTO((long) 3, "Gustavo");
+        ResponseEntity<String> response = controller.cadastrar(pessoasDTO);
+        Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
+        Assertions.assertEquals(response.getBody(), "Pessoa cadastrada com sucesso");
+    }
+
+    @Test
+    void TestPutPessoas(){
+        PessoasDTO pessoasDTO =  new PessoasDTO((long) 1, "Gustavo");
+        ResponseEntity<String> response = controller.editar(1L, pessoasDTO);
+        Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
+        Assertions.assertEquals(response.getBody(), "Editado com sucesso!");
+    }
+
+    @Test
+    void TestDeletePessoas(){
+        ResponseEntity<String> response = controller.deletar(1L);
+        Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
+        Assertions.assertEquals(response.getBody(), "Deletado com sucesso");
+    }
+
 
 
 
