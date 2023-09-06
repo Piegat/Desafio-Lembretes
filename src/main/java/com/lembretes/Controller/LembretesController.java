@@ -40,7 +40,7 @@ public class LembretesController {
 
 
     @PostMapping
-    private ResponseEntity<String> cadastrar(@RequestBody LembretesDTO lembretesDTO){
+    public ResponseEntity<String> cadastrar(@RequestBody LembretesDTO lembretesDTO){
         try{
             this.lembretesService.cadastrar(lembretesDTO);
             return ResponseEntity.ok().body("Cadastrado com sucesso!");
@@ -50,7 +50,7 @@ public class LembretesController {
     }
 
     @PutMapping
-    private ResponseEntity<String> editar(@RequestBody LembretesDTO lembretesDTO){
+    public ResponseEntity<String> editar(@RequestBody LembretesDTO lembretesDTO){
         try{
             this.lembretesService.editar(lembretesDTO);
             return ResponseEntity.ok().body("Editado com sucesso!");
@@ -60,7 +60,7 @@ public class LembretesController {
     }
 
     @DeleteMapping
-    private ResponseEntity<String> deletar(@RequestParam("id") final Long id){
+    public ResponseEntity<String> deletar(@RequestParam("id") final Long id){
         try{
             this.lembretesService.deletar(id);
             return ResponseEntity.ok().body("Deletado com sucesso!");

@@ -35,13 +35,19 @@ public class LembreteTest {
     void injectData(){
         Optional<Lembretes> lembretes = Optional.of(new Lembretes((long) 1,"teste", new Pessoas((long) 1, "Gustavo")));
 
+
         List<Lembretes> lembretesList = new ArrayList<>();
         lembretesList.add(new Lembretes((long) 1, "teste", new Pessoas((long) 1, "Gustavo")));
         lembretesList.add(new Lembretes((long) 2, "teste", new Pessoas((long) 2, "Gustavo")));
-
         Mockito.when(repository.findAll()).thenReturn(lembretesList);
-
         Mockito.when(repository.findById(1L)).thenReturn(lembretes);
+
+        Mockito.when(repository.findById(3L)).thenReturn(lembretes);
+
+
+        Lembretes lembretesEntity = new Lembretes((long) 3,"teste", new Pessoas((long) 3, "Gustavo"));
+
+        Mockito.when(repository.save(lembretesEntity)).thenReturn(lembretesEntity);
     }
 
 
@@ -68,6 +74,18 @@ public class LembreteTest {
             Assertions.assertEquals(lembretes.get(i).getPessoa().getId(), lembretescontroller.get(i).getPessoa().getId());
         }
     }
+
+    @Test
+    void TestPostLembretes(){
+        LembretesDTO lembretesEntity = new LembretesDTO((long) 3,"teste", new Pessoas((long) 3, "Gustavo"));
+        controller.cadastrar(lembretesEntity);
+        LembretesDTO lembretescontroller = controller.getById(3L);
+        Long id = lembretescontroller.getId();
+        System.out.println("Lembretescontroller: " + lembretescontroller);
+        System.out.println(id);
+        Assertions.assertEquals(3L, id);
+    }
+
 
 
 

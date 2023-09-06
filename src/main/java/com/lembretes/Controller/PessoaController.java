@@ -23,23 +23,23 @@ public class PessoaController {
     private PessoaService pessoaService;
 
     @GetMapping("/all")
-    private List<PessoasDTO> findByAll(){
+    public List<PessoasDTO> getAll(){
         return this.pessoaService.findAll();
     }
 
     @GetMapping("/id")
-    private PessoasDTO findById(@RequestParam("id") Long id){
+    public PessoasDTO getById(@RequestParam("id") Long id){
         return this.pessoaService.findById(id);
     }
 
     @GetMapping("/nome")
-    private PessoasDTO findByNome(@RequestParam("nome") String nome){
+    public PessoasDTO getByNome(@RequestParam("nome") String nome){
         return this.pessoaService.findNome(nome);
     }
 
 
     @PostMapping
-    private ResponseEntity<String> cadastrar(@RequestBody PessoasDTO pessoasDTO){
+    public ResponseEntity<String> cadastrar(@RequestBody PessoasDTO pessoasDTO){
         try {
             this.pessoaService.cadastrar(pessoasDTO);
             return ResponseEntity.ok("Pessoa cadastrada com sucesso");
@@ -49,7 +49,7 @@ public class PessoaController {
     }
 
     @PutMapping
-    private ResponseEntity<String> editar(@RequestParam("id") final Long id, @RequestBody final PessoasDTO pessoasDTO){
+    public ResponseEntity<String> editar(@RequestParam("id") final Long id, @RequestBody final PessoasDTO pessoasDTO){
         try {
             this.pessoaService.editar(id, pessoasDTO);
 
