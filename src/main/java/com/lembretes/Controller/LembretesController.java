@@ -21,15 +21,15 @@ public class LembretesController {
     private LembretesRepository lembretesRepository;
 
     @Autowired
-    private LembretesService lembretesService;
+    private LembretesService lembretesService = new LembretesService();
 
     @GetMapping("/all")
-    private List<Lembretes> getAll(){
+    public List<Lembretes> getAll(){
         return this.lembretesRepository.findAll();
     }
 
     @GetMapping("/id")
-    private LembretesDTO getById(@RequestParam("id") final Long id){
+    public LembretesDTO getById(@RequestParam("id") final Long id){
         return this.lembretesService.findById(id);
     }
 
